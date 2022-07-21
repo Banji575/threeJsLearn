@@ -1,6 +1,6 @@
-import Obj from "./obj.js";
+import Obj from "./conponents/obj.js";
 import * as Three from './three.module.js'
-import Viewier from "./Viewier.js";
+import Viewier from "./conponents/Viewier.js";
 
 export default class App {
     constructor() {
@@ -18,6 +18,7 @@ export default class App {
 
 
     createObject() {
+        this.viewier.scene.add(new Three.GridHelper(10, 10))
         this.object = new Three.Mesh(
             new Three.BoxGeometry(.1, .1, 1),
             new Three.MeshStandardMaterial({ color: "gray" })
@@ -25,8 +26,14 @@ export default class App {
         this.viewier.scene.add(this.object)
 
 
+        let angle = 0
+        const axis = new Three.Vector3(1, 4, 3).normalize()
 
-        this.viewier.addUpdate('objRotate', () => this.object.rotation.y -= .01)
+
+        this.viewier.addUpdate('objRotate', () => {
+            angle += .1
+            this.object.setRotationFromAxisAngle(axis, angle)
+        })
 
         const cone = new Three.Mesh(
             new Three.ConeGeometry(.1, .2, 8),

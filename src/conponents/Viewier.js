@@ -1,4 +1,4 @@
-import * as Three from './three.module.js'
+import * as Three from '../three.module.js'
 
 export default class Viewier {
     constructor(options) {
